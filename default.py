@@ -7,6 +7,7 @@ import urllib2
 import cookielib
 import mechanize
 from bs4 import BeautifulSoup
+import json
 
 MODE_SCHEDULE = 10
 MODE_LIVE_STREAMS = 20
@@ -22,6 +23,7 @@ channels_path  = os.path.join(xbmc.translatePath('special://profile/addon_data')
 upcoming_path  = os.path.join(xbmc.translatePath('special://profile/addon_data'), 'plugin.video.hd-streaming.upcoming.txt')
 settings    = xbmcaddon.Addon("plugin.video.hd-streaming");
 handle = int(sys.argv[1])
+SETTINGS_URL = settings.getSetting("settings_url")
 
 def parameters_string_to_dict(parameters):    
     paramDict = {}
@@ -141,8 +143,11 @@ def get_schedule():
 	return matches
 
 def get_channels():
-	channels=['ch1','ch2','ch3','ch4','ch5','ch6','ch7','ch8','ch9','ch10','ch11','ch12','ch13','ch14','ch15','ch16']
-	return channels
+	# Download the settings JSON file and parse
+	f = urllib2.urlopen(SETTINGS_URL)
+	settings = json.load(f)
+
+	return settings['channels']
 
 def get_upcoming_schedule():
 	upcoming_schedule=[]
@@ -191,178 +196,10 @@ def show_upcoming_schedule():
 			addDirectoryItem(i, isFolder=False)
 		xbmcplugin.endOfDirectory(handle=handle, succeeded=True)
 
-def get_rtmp_url(path):
-	streamer  = 'rtmp://vdn.hd-streaming.tv:443/live'
-	playPath  = path
-	appUrl    = 'live' 
-	rtmp = ''.join([streamer,' playpath=', playPath,'?s=6hfu0', ' app=', appUrl, ' live=true'])
-	return rtmp
-
 def show_live_streams():
-	for i in get_channels():
-		j = i.rstrip().lower().replace(" ","")
-		if j == "ch1":
-			path = 'channel1'
-			name = 'Channel 1 - Sky Sports 1'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch2":
-			path = 'channel2'
-			name = 'Channel 2 - Sky Sports 2'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch3":
-			path = 'channel3'
-			name = 'Channel 3 - Sky  Sports 3'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY ,'url':stream,'name':name })
-		elif j == "ch4":
-			path = 'channel4'
-			name = 'Channel 4 - Sky Sports 4'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch5":
-			path = 'channel5'
-			name = 'Channel 5 - Sky Sports News'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch6":
-			path='channel6'
-			name = 'Channel 6 - BT Sport 1'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch7":
-			path = 'channel7'
-			name = 'Channel 7 - BT Sport 2'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch8":
-			path = 'channel8'
-			name = 'Channel 8'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch9":
-			path = 'channel9'
-			name = 'Channel 9'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch10":
-			path = 'channel10'
-			name = 'Channel 10'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch11":
-			path = 'channel11'
-			name = 'Channel 11'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch12":
-			path = 'channel12'
-			name = 'Channel 12'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch13":
-			path = 'channel13'
-			name = 'Channel 13'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch14":
-			path = 'channel14'
-			name = 'Channel 14'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch15":
-			path = 'channel15'
-			name = 'Channel 15'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch16":
-			path = 'channel16'
-			name = 'Channel 16'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-	for i in get_channels():
-		j = i.rstrip().lower().replace(" ","")
-		if j == "ch1":
-			path = 'channel1-sd'
-			name = 'Channel 1 (SD) - Sky Sports 1'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch2":
-			path = 'channel2-sd'
-			name = 'Channel 2 (SD) - Sky Sports 2'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch3":
-			path = 'channel3-sd'
-			name = 'Channel 3 (SD) - Sky Sports 3'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY ,'url':stream,'name':name })
-		elif j == "ch4":
-			path = 'channel4-sd'
-			name = 'Channel 4 (SD) - Sky Sports 4'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch5":
-			path = 'channel5-sd'
-			name = 'Channel 5 (SD) - Sky Sports News'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch6":
-			path='channel6-sd'
-			name = 'Channel 6 (SD) - BT Sport 1'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch7":
-			path = 'channel7-sd'
-			name = 'Channel 7 (SD) - BT Sport 2'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch8":
-			path = 'channel8-sd'
-			name = 'Channel 8 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch9":
-			path = 'channel9-sd'
-			name = 'Channel 9 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch10":
-			path = 'channel10-sd'
-			name = 'Channel 10 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch11":
-			path = 'channel11-sd'
-			name = 'Channel 11 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch12":
-			path = 'channel12-sd'
-			name = 'Channel 12 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch13":
-			path = 'channel13-sd'
-			name = 'Channel 13 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch14":
-			path = 'channel14-sd'
-			name = 'Channel 14 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch15":
-			path = 'channel15-sd'
-			name = 'Channel 15 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
-		elif j == "ch16":
-			path = 'channel16-sd'
-			name = 'Channel 16 (SD)'
-			stream = get_rtmp_url(path)
-			addDirectoryItem(name, isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':stream,'name':name })
+	for channel in get_channels():
+		addDirectoryItem(channel['name'], isPlayable=True, isFolder=False, parameters={ PARAMETER_KEY_MODE: MODE_PLAY, 'url':channel['url'],'name':channel['name'] })
+
 	xbmcplugin.endOfDirectory(handle=handle, succeeded=True)
 
 def play_stream(url, name):

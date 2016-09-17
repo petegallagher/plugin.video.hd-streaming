@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
+  <setting label="Settings URL" type="text" id="settings_url" default="http://hd-streaming.tv/settings/kodi.json" />
   <setting label="Username" type="text" id="username" />
   <setting label="Password" type="text" id="password" option="hidden" />
 </settings>
