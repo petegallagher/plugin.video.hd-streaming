@@ -1,0 +1,36 @@
+[B]0.0.12[/B]
+Added: Gotham compatibility
+
+[B]0.0.11[/B]
+Added: Various improvements
+
+[B]0.0.10[/B]
+Added: New channels, various improvements
+
+[B]0.0.9[/B]
+Added: Various improvements
+
+[B]0.0.8[/B]
+Added: Bug fixes
+
+[B]0.0.7[/B]
+Added: Bug fixes
+
+[B]0.0.6[/B]
+Added: Bug fixes
+
+[B]0.0.5[/B]
+Added: More channels
+
+[B]0.0.4[/B]
+Added: More channels
+
+[B]0.0.3[/B]
+Added: Low bandwidth option support
+
+[B]0.0.2[/B]
+Added: Second version
+
+[B]0.0.1[/B]
+Added: First version
+
